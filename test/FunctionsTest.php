@@ -40,4 +40,16 @@ class FunctionsTest extends TestCase
         $this->expectExceptionMessage('    ^');
         re_test('[a-z', 'word');
     }
+
+    #[Test]
+    public function throwsForInvalidModifier(): void {
+        $this->expectException(MalformedRegex::class);
+        re_test('', '', modifiers:'K');
+    }
+
+    #[Test]
+    public function invalidModifierExceptionMessage(): void {
+        $this->expectExceptionMessage("Unknown modifier 'K'");
+        re_test('', '', modifiers:'K');
+    }
 }
