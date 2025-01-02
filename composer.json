@@ -1,5 +1,8 @@
 {
   "autoload": {
+    "psr-4": {
+      "Regex\\": "src/Regex/"
+    },
     "files": [
       "src/functions.php"
     ]

@@ -19,6 +19,7 @@ extracted from [T-Regx](https://github.com/T-Regx/T-Regx) library, waste removed
 
 ## Examples
 
+Testing string subject against regex pattern:
 ```php
 re_test('[a-z]+', 'word');
 // bool (true)
@@ -27,4 +28,13 @@ re_test('[a-z]+', 'word');
 ```php
 re_test('[a-z]+', 'WORD', modifiers:'i');
 // bool (true)
+```
+
+Helpful error message for syntax errors in regex patterns:
+```php
+try {
+    re_test('[a-z', 'word');
+} catch (\Regex\MalformedRegex $exception) {
+    // 'missing terminating ] for character class'
+}
 ```
