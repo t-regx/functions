@@ -55,6 +55,15 @@ class FunctionsTest extends TestCase
     }
 
     #[Test]
+    public function doesNotLeakImplementationDetail(): void {
+        try {
+            re_test('foo', 'word', 'K');
+        } catch (MalformedRegex $exception) {
+            $this->assertStringNotContainsString('preg_match():', $exception->getMessage());
+        }
+    }
+
+    #[Test]
     #[DoesNotPerformAssertions]
     public function slashIsValidInPattern(): void {
         re_test('a/b', 'a/b');

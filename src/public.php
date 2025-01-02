@@ -3,6 +3,7 @@
 use Regex\MalformedRegex;
 use function Regex\_denoted;
 use function Regex\_pcre_pattern;
+use function Regex\_unprefixed;
 
 function re_test(string $pattern, string $subject, string $modifiers = null): bool {
     $match = \preg_match(_pcre_pattern($pattern, $modifiers), $subject);
@@ -11,15 +12,13 @@ function re_test(string $pattern, string $subject, string $modifiers = null): bo
         return $match;
     }
     \error_clear_last();
-    [$message, $offset] = \explode(' at offset ', $error['message']);
-    $compilationPrefix = 'preg_match(): Compilation failed: ';
-    if (\str_starts_with($message, $compilationPrefix)) {
-        $errorMessage = \subStr($message, \strLen($compilationPrefix));
-        throw new MalformedRegex(_denoted($errorMessage, $pattern, $offset));
+    $errorMessage = _unprefixed($error['message'], 'preg_match(): ');
+    [$pcreMessage, $offset] = \explode(' at offset ', $errorMessage);
+    $compilationPrefix = 'Compilation failed: ';
+    if (\str_starts_with($pcreMessage, $compilationPrefix)) {
+        throw new MalformedRegex(_denoted(
+            \subStr($pcreMessage, \strLen($compilationPrefix)),
+            $pattern, $offset));
     }
-    $prefix = 'preg_match(): ';
-    if (\str_starts_with($message, $prefix)) {
-        throw new MalformedRegex(\subStr($message, \strLen($prefix)));
-    }
-    throw new MalformedRegex($error['message']);
+    throw new MalformedRegex($errorMessage);
 }
