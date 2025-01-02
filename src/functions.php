@@ -3,7 +3,8 @@
 use Regex\MalformedRegex;
 
 function re_test(string $pattern, string $subject, string $modifiers = null): bool {
-    $pregMatch = \preg_match("/$pattern/$modifiers", $subject);
+    $delimiter = \str_contains($pattern, '/') ? "\1" : '/';
+    $pregMatch = \preg_match($delimiter . $pattern . $delimiter . $modifiers, $subject);
     $error = \error_get_last();
     if ($error) {
         [$message, $offset] = \explode(' at offset ', $error['message']);

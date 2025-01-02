@@ -1,6 +1,7 @@
 <?php
 namespace Test;
 
+use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Regex\MalformedRegex;
@@ -51,5 +52,11 @@ class FunctionsTest extends TestCase
     public function invalidModifierExceptionMessage(): void {
         $this->expectExceptionMessage("Unknown modifier 'K'");
         re_test('', '', modifiers:'K');
+    }
+
+    #[Test]
+    #[DoesNotPerformAssertions]
+    public function slashIsValidInPattern(): void {
+        re_test('a/b', 'a/b');
     }
 }
