@@ -7,8 +7,15 @@ function _denoted(string $message, string $pattern, int $offset): string {
 }
 
 function _pcre_pattern(string $pattern, ?string $modifiers): string {
-    $delimiter = \str_contains($pattern, '/') ? "\1" : '/';
+    $delimiter = _pcre_delimiter($pattern);
     return $delimiter . $pattern . $delimiter . "D$modifiers";
+}
+
+function _pcre_delimiter(string $pattern): string {
+    if ($pattern[0] === "\1") {
+        return '';
+    }
+    return "\1";
 }
 
 function _errorMessage(string $phpMessage, string $methodName, string $errorPattern): string {

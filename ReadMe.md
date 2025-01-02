@@ -47,3 +47,10 @@ Regex\MalformedRegex: unmatched closing parenthesis
 (Foo:[a-z]))\w+
            ^
 ```
+
+Literal values in patterns:
+
+```php
+re_test('^foo' . \preg_quote('$12') . '$', 'foo:$12'); // won't work
+re_test(re_quote('^foo@$', ['$12']),       'foo:$12'); // inject literal values into @ placeholders
+```
