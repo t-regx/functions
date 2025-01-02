@@ -1,4 +1,14 @@
 {
+  "autoload": {
+    "files": [
+      "src/functions.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Test\\": "test/"
+    }
+  },
   "require": {
     "php": "^8.2.0"
   },
