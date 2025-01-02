@@ -59,4 +59,14 @@ class FunctionsTest extends TestCase
     public function slashIsValidInPattern(): void {
         re_test('a/b', 'a/b');
     }
+
+    #[Test]
+    public function afterRegexCall_phpState_isNotPolluted(): void {
+        \error_clear_last();
+        try {
+            re_test(')', '');
+        } catch (MalformedRegex) {
+        }
+        $this->assertNull(\error_get_last());
+    }
 }

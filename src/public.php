@@ -7,9 +7,10 @@ use function Regex\_pcre_pattern;
 function re_test(string $pattern, string $subject, string $modifiers = null): bool {
     $match = \preg_match(_pcre_pattern($pattern, $modifiers), $subject);
     $error = \error_get_last();
-    if (!$error) {
+    if ($error === null) {
         return $match;
     }
+    \error_clear_last();
     [$message, $offset] = \explode(' at offset ', $error['message']);
     $compilationPrefix = 'preg_match(): Compilation failed: ';
     if (\str_starts_with($message, $compilationPrefix)) {
