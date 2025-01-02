@@ -78,4 +78,9 @@ class FunctionsTest extends TestCase
         }
         $this->assertNull(\error_get_last());
     }
+
+    #[Test]
+    public function dollarAssertion_failsTrailingNewline(): void {
+        $this->assertFalse(re_test('foo$', "foo\n"));
+    }
 }

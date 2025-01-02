@@ -8,7 +8,7 @@ function _denoted(string $message, string $pattern, int $offset): string {
 
 function _pcre_pattern(string $pattern, ?string $modifiers): string {
     $delimiter = \str_contains($pattern, '/') ? "\1" : '/';
-    return $delimiter . $pattern . $delimiter . $modifiers;
+    return $delimiter . $pattern . $delimiter . "D$modifiers";
 }
 
 function _unprefixed(string $string, string $prefix): string {
