@@ -33,4 +33,11 @@ class FunctionsTest extends TestCase
         $this->expectExceptionMessage('missing terminating ] for character class');
         re_test('[a-z', 'word');
     }
+
+    #[Test]
+    public function denotedPositionOfSyntaxError(): void {
+        $this->expectExceptionMessage('[a-z');
+        $this->expectExceptionMessage('    ^');
+        re_test('[a-z', 'word');
+    }
 }

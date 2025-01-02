@@ -23,9 +23,7 @@ Testing string subject against regex pattern:
 ```php
 re_test('[a-z]+', 'word');
 // bool (true)
-```
 
-```php
 re_test('[a-z]+', 'WORD', modifiers:'i');
 // bool (true)
 ```
@@ -37,4 +35,15 @@ try {
 } catch (\Regex\MalformedRegex $exception) {
     // 'missing terminating ] for character class'
 }
+```
+
+Exceptions with positions of syntax errors in the pattern:
+```php
+re_test('(Foo:[a-z]))\w+', 'word');
+```
+```
+Regex\MalformedRegex: unmatched closing parenthesis
+
+(Foo:[a-z]))\w+
+           ^
 ```
