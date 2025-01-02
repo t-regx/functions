@@ -19,10 +19,11 @@ function re_quote(string $pattern, array $literals = []): string {
 }
 
 function quoteWith(string $pattern, array $literals, string $delimiter, string $placeholder): string {
-    $result = \implode('', \array_map(
-        fn(string $p, ?string $v) => $p . $v,
-        \explode($placeholder, $pattern),
-        \array_map(fn(string $value) => preg_quote($value, $delimiter), $literals),
-    ));
-    return $delimiter . $result . $delimiter;
+    $count = 0;
+    while (($pos = \strPos($pattern, $placeholder)) !== false) {
+        $quoted = \preg_quote($literals[$count], $delimiter);
+        $pattern = \subStr_replace($pattern, $quoted, $pos, \strLen($placeholder));
+        ++$count;
+    }
+    return $delimiter . $pattern . $delimiter;
 }

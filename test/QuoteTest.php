@@ -48,4 +48,12 @@ class QuoteTest extends TestCase
     public function leadingSlash_isNotNaivelyMistookForDelimitedPattern(): void {
         re_test('/abc', '/abc');
     }
+
+    #[Test]
+    public function benchmark(): void {
+        $this->markTestSkipped('Benchmark');
+        $longString = str_repeat('two', 50);
+        $literals = ["Three", $longString, $longString];
+        Benchmark::run(85 * 1000, fn() => re_quote('@ one @ two @', $literals));
+    }
 }
