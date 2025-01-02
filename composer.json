@@ -4,7 +4,8 @@
       "Regex\\": "src/Regex/"
     },
     "files": [
-      "src/functions.php"
+      "src/public.php",
+      "src/Regex/private.php"
     ]
   },
   "autoload-dev": {

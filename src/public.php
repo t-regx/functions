@@ -1,6 +1,8 @@
 <?php
 
 use Regex\MalformedRegex;
+use function Regex\_denoted;
+use function Regex\_pcre_pattern;
 
 function re_test(string $pattern, string $subject, string $modifiers = null): bool {
     $match = \preg_match(_pcre_pattern($pattern, $modifiers), $subject);
@@ -19,14 +21,4 @@ function re_test(string $pattern, string $subject, string $modifiers = null): bo
         throw new MalformedRegex(\subStr($message, \strLen($prefix)));
     }
     throw new MalformedRegex($error['message']);
-}
-
-function _denoted(string $message, string $pattern, int $offset): string {
-    $caret = \str_repeat(' ', $offset) . '^';
-    return $message . "\n\n" . $pattern . "\n" . $caret . "\n";
-}
-
-function _pcre_pattern(string $pattern, ?string $modifiers): string {
-    $delimiter = \str_contains($pattern, '/') ? "\1" : '/';
-    return $delimiter . $pattern . $delimiter . $modifiers;
 }
