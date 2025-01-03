@@ -1,6 +1,7 @@
 <?php
 namespace Test;
 
+use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\Attributes\DoesNotPerformAssertions;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -8,6 +9,11 @@ use Regex\MalformedRegex;
 
 class FunctionsTest extends TestCase
 {
+    #[Before]
+    public function initialize(): void {
+        \error_reporting(\E_ALL);
+    }
+
     #[Test]
     public function matchingSubject_testsTrue() {
         $this->assertTrue(re_test('\w', 'word'));

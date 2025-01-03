@@ -20,12 +20,12 @@ function _pcre_delimiter(string $pattern): string {
 
 function _errorMessage(string $phpMessage, string $methodName, string $errorPattern): string {
     $errorMessage = _unprefixed($phpMessage, "$methodName(): ");
-    [$pcreMessage, $offset] = \explode(' at offset ', $errorMessage);
+    $tuple = \explode(' at offset ', $errorMessage);
     $compilationPrefix = 'Compilation failed: ';
-    if (\str_starts_with($pcreMessage, $compilationPrefix)) {
+    if (\str_starts_with($tuple[0], $compilationPrefix)) {
         return _denoted(
-            \subStr($pcreMessage, \strLen($compilationPrefix)),
-            $errorPattern, $offset);
+            \subStr($tuple[0], \strLen($compilationPrefix)),
+            $errorPattern, $tuple[1]);
     }
     return $errorMessage;
 }
